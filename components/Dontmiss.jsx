@@ -31,7 +31,7 @@ const dontMissItems = [
 
 const Dontmiss = () => {
   return (
-    <section className="max-w-7xl mx-auto px-4 py-8 bg-gray-50">
+    <section className="w-full">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-3xl font-bold text-gray-900">DON'T MISS</h2>
         <Link 

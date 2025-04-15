@@ -7,11 +7,13 @@ const Hero = () => {
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
-          src="/images/dinner.jpg"
+          src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1920&h=1080&q=80"
           alt="Delicious food spread"
           fill
           className="object-cover brightness-[0.85]"
           priority
+          sizes="100vw"
+          quality={90}
         />
       </div>
       

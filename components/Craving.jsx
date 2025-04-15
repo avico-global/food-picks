@@ -27,13 +27,13 @@ const cravingData = [
 
 const Craving = () => {
   return (
-    <section className="py-16 px-4 max-w-7xl mx-auto">
+    <section className="py-16 px-4 max-w-[1440px] mx-auto">
       <h2 className="text-4xl font-bold mb-12 text-center">WHAT WE'RE CRAVING</h2>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {cravingData.map((item) => (
-          <div key={item.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-            <div className="relative h-48 w-full">
+          <div key={item.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col h-full">
+            <div className="relative h-64 w-full">
               <Image
                 src={item.image}
                 alt={item.title}
@@ -45,9 +45,9 @@ const Craving = () => {
                 <span className="text-sm font-semibold text-gray-800">{item.type}</span>
               </div>
             </div>
-            <div className="p-6">
+            <div className="p-6 flex-grow flex flex-col">
               <h3 className="text-xl font-bold mb-2 text-gray-800">{item.title}</h3>
-              <p className="text-gray-600 mb-4">{item.description}</p>
+              <p className="text-gray-600 mb-4 flex-grow">{item.description}</p>
               <button className="w-full bg-orange-500 text-white py-2 px-4 rounded-lg hover:bg-orange-600 transition-colors duration-300">
                 Explore Recipes
               </button>

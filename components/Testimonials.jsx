@@ -40,7 +40,7 @@ const testimonialData = [
 
 const Testimonials = () => {
   return (
-    <section className="py-12 px-4 max-w-7xl mx-auto">
+    <section className="w-full">
       <div className="flex justify-between items-center mb-10">
         <h2 className="text-3xl font-bold text-gray-900 tracking-tight">FRESH FROM OUR COMMUNITY</h2>
         <Link href="/community" className="text-blue-600 hover:text-blue-800 font-medium transition-colors">
@@ -50,7 +50,7 @@ const Testimonials = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {testimonialData.map((item) => (
-          <div key={item.id} className="border rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow bg-white">
+          <div key={item.id} className="border rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow bg-white flex flex-col h-full">
             <div className="flex items-center space-x-4 mb-5">
               <div className="w-12 h-12 relative flex-shrink-0">
                 <Image
@@ -69,7 +69,7 @@ const Testimonials = () => {
               </div>
             </div>
             
-            <p className="text-gray-700 mb-5 leading-relaxed">{item.content}</p>
+            <p className="text-gray-700 mb-5 leading-relaxed flex-grow">{item.content}</p>
             
             <div className="flex justify-between items-center pt-4 border-t border-gray-100">
               <span className="text-gray-500 text-sm">{item.timeAgo}</span>
