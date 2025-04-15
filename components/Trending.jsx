@@ -31,7 +31,7 @@ const trendingItems = [
 
 const Trending = () => {
   return (
-    <section className="max-w-7xl mx-auto px-4 py-8">
+    <section className="w-full">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-3xl font-bold text-gray-900">TRENDING NOW</h2>
         <Link 
