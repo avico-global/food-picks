@@ -7,7 +7,7 @@ const Hero = () => {
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
-          src="/images/dinner.jpg"
+          src="/images/saad.jpg"
           alt="Delicious food spread"
           fill
           className="object-cover brightness-[0.85]"

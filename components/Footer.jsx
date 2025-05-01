@@ -4,7 +4,7 @@ import { FaFacebookF, FaInstagram, FaPinterestP, FaTwitter, FaYoutube, FaEnvelop
 
 const Footer = () => {
   return (
-    <footer className="bg-black text-white py-8">
+    <footer className="bg-black w-full text-white py-8">
       <div className="container mx-auto px-4">
         {/* Social Media Icons */}
         <div className="flex items-center justify-center space-x-6 mb-6">
@@ -27,7 +27,7 @@ const Footer = () => {
             <FaEnvelope size={20} />
           </Link>
         </div>
-
+      
         {/* Back to Top */}
         <div className="text-center mb-6">
           <button
@@ -46,11 +46,11 @@ const Footer = () => {
           <Link href="/site-map" className="hover:text-gray-400">
             Site Map
           </Link>
-          <Link href="/about" className="hover:text-gray-400">
-            About Us
+          <Link href="/about-us">
+            <span className="hover:text-gray-400 cursor-pointer">About Us</span>
           </Link>
-          <Link href="/help" className="hover:text-gray-400">
-            Help
+          <Link href="/Help-Contact" className="hover:text-gray-400">
+          Help & Contact 
           </Link>
         </div>
 
@@ -62,8 +62,14 @@ const Footer = () => {
           <Link href="/adchoices" className="hover:text-gray-400">
             AdChoices
           </Link>
-          <Link href="/privacy" className="hover:text-gray-400">
+          <Link href="/privacy-policy" className="hover:text-gray-400">
             Privacy Policy
+          </Link>
+          <Link href="/our-community" className="hover:text-gray-400">
+          Our Community
+          </Link>
+          <Link href="/terms-of-service" className="hover:text-gray-400">
+          Terms Of Services
           </Link>
           <Link href="/visitor-agreement" className="hover:text-gray-400">
             Visitor Agreement

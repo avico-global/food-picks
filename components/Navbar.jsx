@@ -1,9 +1,39 @@
-import React from 'react'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
+"use client";
+import React, { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import Signup from './Signup';
+import Login from './Login';
 
 export default function Navbar() {
-  const router = useRouter()
+  const router = useRouter();
+  const [isOpenSign, setIsOpenSign] = useState(false);
+  const [isOpenLogin, setIsOpenLogin] = useState(false);
+
+  const signRef = useRef(null);
+  const loginRef = useRef(null);
+
+  // Close Signup modal on outside click
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isOpenSign && signRef.current && !signRef.current.contains(event.target)) {
+        setIsOpenSign(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isOpenSign]);
+
+  // Close Login modal on outside click
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isOpenLogin && loginRef.current && !loginRef.current.contains(event.target)) {
+        setIsOpenLogin(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isOpenLogin]);
 
   const recipeCategories = [
     { title: 'Breakfast & Brunch', href: '/recipes/breakfast-brunch' },
@@ -18,7 +48,7 @@ export default function Navbar() {
     { title: 'Quick & Easy', href: '/recipes/quick-easy' },
     { title: 'Slow-Cooker', href: '/recipes/slow-cooker' },
     { title: 'Air Fryer', href: '/recipes/air-fryer' },
-  ]
+  ];
 
   const popularCategories = [
     { title: 'Most Viewed', href: '/popular/most-viewed' },
@@ -27,7 +57,7 @@ export default function Navbar() {
     { title: 'Seasonal Favorites', href: '/popular/seasonal' },
     { title: 'Trending Recipes', href: '/popular/trending-recipes' },
     { title: 'Popular Articles', href: '/popular/trending-articles' },
-  ]
+  ];
 
   const articleCategories = [
     { title: 'Cooking Tips', href: '/articles/cooking-tips' },
@@ -36,115 +66,102 @@ export default function Navbar() {
     { title: 'Restaurant Reviews', href: '/articles/restaurant-reviews' },
     { title: 'Chef Interviews', href: '/articles/chef-interviews' },
     { title: 'Food Culture', href: '/articles/food-culture' },
-  ]
+  ];
 
   return (
-    <header className="bg-black text-white w-full">
+    <header className="bg-black text-white w-full relative">
+      {/* Signup Modal */}
+      {isOpenSign && (
+        <div className="fixed top-0 left-0 w-screen h-full flex justify-center items-center z-50 backdrop-blur-lg bg-black/30">
+          <div ref={signRef} className="relative flex flex-col my-12 justify-center">
+            <Signup
+              switchToLogin={() => {
+                setIsOpenSign(false);
+                setIsOpenLogin(true);
+              }}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Login Modal */}
+      {isOpenLogin && (
+        <div className="fixed top-0 left-0 w-screen h-full flex justify-center items-center z-50 backdrop-blur-lg bg-black/30">
+          <div ref={loginRef} className="relative flex flex-col my-12 justify-center">
+            <Login
+              switchToSignup={() => {
+                setIsOpenLogin(false);
+                setIsOpenSign(true);
+              }}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Navbar Content */}
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
         {/* Logo */}
-        <div className="flex items-center">
-          <Link href="/" className="text-4xl font-bold">
-            Food<span className="text-yellow-400">.</span>
-          </Link>
-        </div>
+        <Link href="/" className="text-4xl font-bold">
+          Food<span className="text-yellow-400">.</span>
+        </Link>
 
-        {/* Navigation Links */}
+        {/* Desktop Menu */}
         <div className="hidden md:flex space-x-6 ml-10">
-          {/* Recipes Dropdown */}
-          <div className="relative group">
-            <Link href="/recipes" className="font-medium hover:text-yellow-400 py-2 inline-block">
-              RECIPES
-            </Link>
-            <div className="hidden group-hover:block absolute left-0 mt-2 w-64 bg-white rounded-lg shadow-xl z-50">
-              <div className="py-2">
-                {recipeCategories.map((category) => (
-                  <Link
-                    key={category.href}
-                    href={category.href}
-                    className="block px-4 py-2 text-gray-800 hover:bg-yellow-50 hover:text-yellow-600"
-                  >
-                    {category.title}
-                  </Link>
-                ))}
+          {/* Dropdowns */}
+          {[
+            { label: "RECIPES", items: recipeCategories, href: "/recipes" },
+            { label: "POPULAR", items: popularCategories, href: "/popular" },
+            { label: "ARTICLES", items: articleCategories, href: "/articles" },
+          ].map((menu) => (
+            <div key={menu.label} className="relative group">
+              <Link href={menu.href} className="font-medium hover:text-yellow-400 py-2 inline-block">
+                {menu.label}
+              </Link>
+              <div className="hidden group-hover:block absolute left-0 mt-2 w-64 bg-white rounded-lg shadow-xl z-50">
+                <div className="py-2">
+                  {menu.items.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className="block px-4 py-2 text-gray-800 hover:bg-yellow-50 hover:text-yellow-600"
+                    >
+                      {item.title}
+                    </Link>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
+          ))}
 
-          {/* Popular Dropdown */}
-          <div className="relative group">
-            <Link href="/popular" className="font-medium hover:text-yellow-400 py-2 inline-block">
-              POPULAR
+          {/* Static Links */}
+          {[
+            { title: 'MEAT & SEAFOOD', href: '/meat-seafood' },
+            { title: 'HEALTHY & DIET', href: '/healthy-diet' },
+            { title: 'HOLIDAYS', href: '/holidays' },
+            { title: 'CUISINE', href: '/cuisine' },
+            { title: 'SEASONAL', href: '/seasonal' },
+          ].map((link) => (
+            <Link key={link.href} href={link.href} className="font-medium hover:text-yellow-400 py-2">
+              {link.title}
             </Link>
-            <div className="hidden group-hover:block absolute left-0 mt-2 w-64 bg-white rounded-lg shadow-xl z-50">
-              <div className="py-2">
-                {popularCategories.map((category) => (
-                  <Link
-                    key={category.href}
-                    href={category.href}
-                    className="block px-4 py-2 text-gray-800 hover:bg-yellow-50 hover:text-yellow-600"
-                  >
-                    {category.title}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <Link href="/meat-seafood" className="font-medium hover:text-yellow-400 py-2">
-            MEAT & SEAFOOD
-          </Link>
-          <Link href="/healthy-diet" className="font-medium hover:text-yellow-400 py-2">
-            HEALTHY & DIET
-          </Link>
-          <Link href="/holidays" className="font-medium hover:text-yellow-400 py-2">
-            HOLIDAYS
-          </Link>
-          <Link href="/cuisine" className="font-medium hover:text-yellow-400 py-2">
-            CUISINE
-          </Link>
-          <Link href="/seasonal" className="font-medium hover:text-yellow-400 py-2">
-            SEASONAL
-          </Link>
-
-          {/* Articles Dropdown */}
-          <div className="relative group">
-            <Link href="/articles" className="font-medium hover:text-yellow-400 py-2 inline-block">
-              ARTICLES
-            </Link>
-            <div className="hidden group-hover:block absolute left-0 mt-2 w-64 bg-white rounded-lg shadow-xl z-50">
-              <div className="py-2">
-                {articleCategories.map((category) => (
-                  <Link
-                    key={category.href}
-                    href={category.href}
-                    className="block px-4 py-2 text-gray-800 hover:bg-yellow-50 hover:text-yellow-600"
-                  >
-                    {category.title}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
 
         {/* Icons */}
         <div className="flex items-center space-x-4">
-          {/* Search Icon */}
-          <button className="hover:text-yellow-400">
+          <button className="hover:text-yellow-400 cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
           </button>
-          
-          {/* Bookmark Icon */}
-          <button className="hover:text-yellow-400">
+
+          <button className="hover:text-yellow-400 cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
             </svg>
           </button>
-          
-          {/* User Icon */}
-          <button className="hover:text-yellow-400">
+
+          <button onClick={() => setIsOpenLogin(true)} className="hover:text-yellow-400 cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
@@ -152,5 +169,5 @@ export default function Navbar() {
         </div>
       </div>
     </header>
-  )
+  );
 }
