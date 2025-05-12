@@ -40,7 +40,7 @@ const Footer = () => {
 
         {/* Navigation Links */}
         <div className="flex flex-wrap justify-center space-x-6 mb-6">
-          <Link href="/categories" className="hover:text-gray-400">
+          <Link href="/recipes" className="hover:text-gray-400">
             All Categories
           </Link>
           <Link href="/site-map" className="hover:text-gray-400">

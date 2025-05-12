@@ -25,12 +25,6 @@ const Hero = () => {
             <br />
             DINNER RECIPES
           </h1>
-          <Link
-            href="/recipes"
-            className="inline-block bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-semibold px-8 py-4 rounded-lg transition-colors duration-200"
-          >
-            SEE THEM ALL
-          </Link>
         </div>
       </div>
     </div>
